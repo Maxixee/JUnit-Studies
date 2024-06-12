@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import br.com.hiego.model.Person;
 
-public interface PersonRepository extends JpaRepository<Person, Long> {
+public interface  PersonRepository extends JpaRepository<Person, Long> {
     
     Optional<Person> findByEmail(String email);
     
