@@ -1,6 +1,7 @@
 package br.com.hiego.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import br.com.hiego.exceptions.ResourceNotFoundException;
 import br.com.hiego.model.Person;
 import br.com.hiego.repositories.PersonRepository;
+
+import javax.swing.text.html.Option;
 
 @Service
 public class PersonServices {
@@ -36,7 +39,12 @@ public class PersonServices {
 	public Person create(Person person) {
 
 		logger.info("Creating one person!");
-		
+
+		Optional<Person> savedPerson = repository.findByEmail(person.getEmail());
+		if(savedPerson.isPresent()){
+			throw new ResourceNotFoundException("Person already exists with given e-mail: " + person.getEmail());
+		}
+
 		return repository.save(person);
 	}
 	
